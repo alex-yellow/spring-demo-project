@@ -61,4 +61,19 @@ public class TaskRepositoryImpl implements TaskRepository{
         String sql = "SELECT * FROM tasks WHERE title ILIKE ?";
         return jdbcTemplate.query(sql, taskRowMapper, "%" + title + "%");
     }
+
+    @Override
+    public List<Task> findPaginatedAndSorted(String sortBy, String order, int page, int size){
+        List<String> allowedSortFields = List.of("title, description, published");
+        if (!allowedSortFields.contains(sortBy.toLowerCase())) {
+            sortBy = "id";
+        }
+
+        if (!order.equalsIgnoreCase("asc") && !order.equalsIgnoreCase("desc")) {
+            order = "asc";
+        }
+        int offset = page * size;
+        String sql = "SELECT * FROM tasks ORDER BY " + sortBy + " " + order + " LIMIT ? OFFSET ?";
+        return jdbcTemplate.query(sql, new Object[]{size, offset}, taskRowMapper);
+    }
 }

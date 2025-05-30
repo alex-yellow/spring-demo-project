@@ -14,4 +14,5 @@ public interface TaskService {
     List<Task> findByTitleContaining(String title);
     int deleteById(Long id);
     int deleteAll();
+    public List<Task> findPaginatedAndSorted(String sortBy, String order, int page, int size);
 }

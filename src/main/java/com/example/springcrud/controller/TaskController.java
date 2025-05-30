@@ -98,4 +98,16 @@ public class TaskController {
         }
         return ResponseEntity.ok(tasks);
     }
+
+    @GetMapping("/page")
+    public ResponseEntity<List<Task>>getPaginatedTasks(@RequestParam(defaultValue = "id") String sortBy,
+                                                       @RequestParam(defaultValue = "asc") String order,
+                                                       @RequestParam(defaultValue = "0") int page,
+                                                       @RequestParam(defaultValue = "5") int size){
+        List<Task> tasks = taskService.findPaginatedAndSorted(sortBy, order, page, size);
+        if (tasks.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(tasks);
+    }
 }

@@ -44,6 +44,11 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
+    public List<Task> findPaginatedAndSorted(String sortBy, String order, int page, int size) {
+        return taskRepository.findPaginatedAndSorted(sortBy, order, page, size);
+    }
+
+    @Override
     public List<Task> findByPublished(boolean published){
         return taskRepository.findByPublished(published);
     }
