@@ -2,6 +2,7 @@ package com.example.springcrud.controller;
 
 import com.example.springcrud.model.Task;
 import com.example.springcrud.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -38,7 +39,7 @@ public class TaskController {
 
     // Создать новую задачу
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+    public ResponseEntity<Task> createTask(@Valid @RequestBody Task task) {
         int result = taskService.save(task);
         if (result > 0) {
             return ResponseEntity.status(HttpStatus.CREATED).body(task);
@@ -48,7 +49,7 @@ public class TaskController {
 
     // Обновить задачу
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
         Task existingTask = taskService.findById(id);
         if (existingTask == null) {
             return ResponseEntity.notFound().build();

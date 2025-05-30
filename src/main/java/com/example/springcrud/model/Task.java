@@ -1,6 +1,7 @@
 package com.example.springcrud.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tasks")
@@ -10,6 +11,7 @@ public class Task {
     private Long id;
 
     @Column(name = "title")
+    @NotBlank(message = "Title is required")
     private String title;
 
     @Column(name = "description")
